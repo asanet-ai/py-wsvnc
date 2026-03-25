@@ -1,6 +1,7 @@
 """Client that implements RFB Protocol according to RFC 6143."""
 
 import re
+import threading
 import traceback
 from struct import pack, unpack
 from typing import List, Optional, Type
@@ -44,6 +45,9 @@ class RFBClient:
         security_type: SecurityTypeInterface = NoSecurity(),
         shared_flag: int = 1,
     ) -> None:
+        self.frame_count = 0
+        self.frame_count_lock = threading.Lock()
+        self.frame_event = threading.Event()
         self.transport = SafeTransport(conn)
         self.security_type = security_type
         self.encs = [RawEncoding]
@@ -186,6 +190,11 @@ class RFBClient:
 
     async def _handle_framebuffer_update(self, msg: bytes) -> None:
         """Async function helper to handle framebuffer update messages from server."""
+        with self.frame_count_lock:
+            self.frame_count += 1
+            self.frame_event.set()
+
+        
         if self.img is None:  # set the image to the screen size and all black.
             self.img = Image.new("RGBA", (self.width, self.height), (0, 0, 0, 0))
 

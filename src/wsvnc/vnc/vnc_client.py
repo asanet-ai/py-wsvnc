@@ -266,6 +266,8 @@ class WSVNCClient:
         incremental: bool = False,
         x: int = 0,
         y: int = 0,
+        wait_for_frame: bool = False,
+        timeout_sec: Optional[float] = 2,
     ) -> None:
         """Send a remote framebuffer update request that will update the screen.
 
@@ -278,17 +280,34 @@ class WSVNCClient:
             incremental (bool, optional): Incremental flag (see RFC 7.5.3). Defaults to False.
             x (int, optional): Starting x coord of frame. Defaults to 0.
             y (int, optional): Starting y coord of frame. Defaults to 0.
+            wait_for_frame (bool, optional): Wait for a new frame before returning. Defaults to False.
+            timeout_sec (Optional[float], optional): Timeout in seconds for waiting for a new frame. Defaults to 2.
         """
+        start_frame = self._rfb_client.frame_count
+        self._rfb_client.frame_event.clear()
+
         if width is None:
             width = self._rfb_client.width
         if height is None:
             height = self._rfb_client.height
-        asyncio.run_coroutine_threadsafe(
+
+        future = asyncio.run_coroutine_threadsafe(
             self._rfb_client.framebuffer_update_request(
                 x, y, width, height, incremental
             ),
             self._loop,
         )
+
+        future.result(timeout=timeout_sec)
+        if not wait_for_frame:
+            return
+
+        if self._rfb_client.frame_count > start_frame:
+            return
+
+        self._rfb_client.frame_event.wait(timeout=timeout_sec)
+
+        return
 
     def key_event(self, key: int, down: bool) -> None:
         """Non-abstracted key event call.
