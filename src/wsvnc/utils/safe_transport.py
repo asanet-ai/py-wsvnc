@@ -1,9 +1,9 @@
 """Wrapper to ensure binary transmission."""
 
-from websockets import ClientConnection as WebSocketClientProtocol
+from websockets import ClientConnection
 
 class SafeTransport:
-    def __init__(self, transport: WebSocketClientProtocol) -> None:
+    def __init__(self, transport: ClientConnection) -> None:
         self.conn = transport
 
     async def recv(self) -> bytes:
