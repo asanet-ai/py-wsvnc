@@ -190,10 +190,6 @@ class RFBClient:
 
     async def _handle_framebuffer_update(self, msg: bytes) -> None:
         """Async function helper to handle framebuffer update messages from server."""
-        with self.frame_count_lock:
-            self.frame_count += 1
-            self.frame_event.set()
-
         
         if self.img is None:  # set the image to the screen size and all black.
             self.img = Image.new("RGBA", (self.width, self.height), (0, 0, 0, 0))
@@ -233,6 +229,10 @@ class RFBClient:
                 )
 
             self.img.paste(enc.img, (rect.x, rect.y))
+        
+        with self.frame_count_lock:
+            self.frame_count += 1
+            self.frame_event.set()
 
     async def _handle_server_cut_text(self, msg: bytes) -> None:
         """Handle server cut text messages.
