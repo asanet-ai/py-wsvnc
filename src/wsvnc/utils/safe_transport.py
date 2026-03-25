@@ -2,6 +2,7 @@
 
 from websockets import ClientConnection
 
+
 class SafeTransport:
     def __init__(self, transport: ClientConnection) -> None:
         self.conn = transport
