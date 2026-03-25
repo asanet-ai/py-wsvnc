@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "py-wsvnc2"
 version = "1.0.0"
 description = "WebSocket VNC Client."
-authors = [{ name = "Matthew Boyer", email = "matthew.boyer@cynnovative.com", "Jon Cwik", email = "jon.cwik@asanet.ai"  }]
+authors = [{ name = "Matthew Boyer", email = "matthew.boyer@cynnovative.com"},{ "Jon Cwik", email = "jon.cwik@asanet.ai" }]
 dependencies = [
   "websockets~=16.0",
   "pillow~=12.1.1",
