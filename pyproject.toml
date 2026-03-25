@@ -20,7 +20,7 @@ license = { text = "MIT" }
 homepage = "https://github.com/Cynnovative/py-wsvnc"
 
 [project.optional-dependencies]
-dev = ["docformatter[tomli]>=1.7.5", "mypy", "pytest>=7.4.1", "ruff>=0.1.6", "websockify>=0.13.0", "types-Pillow>=10.1.0.1", "coverage>=7.3.2"]
+dev = ["mypy", "pytest>=9.0.2", "ruff>=0.15.7", "websockify>=0.13.0", "types-Pillow>=10.1.0.1", "coverage>=7.13.5"]
 
 [tool.isort]
 profile = "black"
@@ -42,13 +42,6 @@ testpaths = ["tests"]
 norecursedirs = ["tests/mock_server_tests"]
 log_cli = true
 log_cli_level = "INFO"
-
-[tool.docformatter]
-wrap-summaries = 88
-wrap-descriptions = 88
-black = true
-exclude = ["notebooks", "_version.py"]
-recursive = true
 
 [tool.ruff.pydocstyle]
 convention = "numpy"

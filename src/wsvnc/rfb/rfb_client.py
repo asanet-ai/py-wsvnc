@@ -6,7 +6,7 @@ from struct import pack, unpack
 from typing import List, Optional, Type
 
 from PIL import Image
-from websockets import WebSocketClientProtocol
+from websockets import ClientConnection as WebSocketClientProtocol
 
 from wsvnc.constants import supported_versions
 from wsvnc.encodings.copyrect_encoding import CopyRectEncoding
