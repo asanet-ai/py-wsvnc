@@ -20,7 +20,7 @@ license = { text = "MIT" }
 homepage = "https://github.com/Cynnovative/py-wsvnc"
 
 [project.optional-dependencies]
-dev = ["docformatter[tomli]>=1.7.5", "mypy", "pytest>=7.4.1", "ruff>=0.1.6", "websockify>=0.11.0", "types-Pillow>=10.1.0.1", "coverage>=7.3.2"]
+dev = ["docformatter[tomli]>=1.7.5", "mypy", "pytest>=7.4.1", "ruff>=0.1.6", "websockify>=0.13.0", "types-Pillow>=10.1.0.1", "coverage>=7.3.2"]
 
 [tool.isort]
 profile = "black"
