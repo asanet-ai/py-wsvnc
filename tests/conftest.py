@@ -7,7 +7,7 @@ import threading
 import time
 from struct import pack
 
-from websockets.server import serve
+from websockets.asyncio.server import serve
 from websockify import WebSocketProxy
 
 from wsvnc.pixel_format import PixelFormat

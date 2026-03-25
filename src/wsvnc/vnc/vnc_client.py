@@ -399,8 +399,7 @@ class WSVNCClient:
                 origin=self.origin,  # type: ignore
                 subprotocols=["binary"],  # type: ignore
                 ping_interval=None,
-                max_size=2**25,
-                read_limit=2**25,
+                max_size=2**25
             ) as conn:
                 self._rfb_client = RFBClient(conn, self.security_type, self.shared_flag)
                 await self._rfb_client.handshake()
