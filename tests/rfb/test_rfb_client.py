@@ -5,7 +5,7 @@ from unittest import TestCase, mock
 
 import pytest
 from PIL import Image
-from websockets import WebSocketClientProtocol
+from websockets import ClientConnection
 
 from wsvnc.encodings.raw_encoding import RawEncoding
 from wsvnc.pixel_format import PixelFormat
@@ -18,7 +18,7 @@ from wsvnc.utils.safe_transport import SafeTransport
 
 class TestRFBClient(TestCase):
     def setUp(self):
-        self.conn_mock = mock.AsyncMock(spec=WebSocketClientProtocol)
+        self.conn_mock = mock.AsyncMock(spec=ClientConnection)
         self.transport_mock = mock.AsyncMock(spec=SafeTransport)
         self.security_type = NoSecurity()
         self.pf = PixelFormat()
