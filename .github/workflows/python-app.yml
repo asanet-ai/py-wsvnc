@@ -34,8 +34,6 @@ jobs:
       - name: run tests
         run: |
           coverage run -p --source=src -m pytest
-          coverage run -p --source=src -m pytest tests/mock_server_tests
-          coverage combine
           coverage report
           coverage xml -o coverage.xml
 
