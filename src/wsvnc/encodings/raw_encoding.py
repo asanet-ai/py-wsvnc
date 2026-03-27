@@ -75,6 +75,16 @@ class RawEncoding(EncodingInterface):
                 r = (raw_pixel >> pf.red_shift & pf.red_max) & 0xFFFF
                 g = (raw_pixel >> pf.green_shift & pf.green_max) & 0xFFFF
                 b = (raw_pixel >> pf.blue_shift & pf.blue_max) & 0xFFFF
+                # Normalize from server's native range (0..channel_max) to PIL's 0-255.
+                # For 32bpp with max=255 this is a no-op; for 16bpp RGB565
+                # (red_max=31, green_max=63, blue_max=31) this prevents the dark
+                # green tint caused by un-scaled sub-byte values.
+                if pf.red_max not in (0, 255):
+                    r = r * 255 // pf.red_max
+                if pf.green_max not in (0, 255):
+                    g = g * 255 // pf.green_max
+                if pf.blue_max not in (0, 255):
+                    b = b * 255 // pf.blue_max
                 self.img.putpixel((x, y), (r, g, b, 255))
             else:
                 if pf.color_map is None:
